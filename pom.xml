@@ -89,6 +89,16 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.0.Final</version> <!-- Verifique a versão mais recente -->
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version> <!-- Verifique a versão mais recente -->
+		</dependency>
 	</dependencies>
 
 	<build>
