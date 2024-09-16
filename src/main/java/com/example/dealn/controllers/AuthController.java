@@ -27,21 +27,21 @@ public class AuthController {
 
     @PostMapping("/login") //endpoint para login de usuários
     public ResponseEntity login(@RequestBody LoginRequestDTO body) { // pede um dto como parametro que é chamado de body
-        User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário nao encontrado"));
+        User user = this.userRepository.findByLogin(body.login()).orElseThrow(() -> new RuntimeException("Usuário nao encontrado"));
         if (passwordEncoder.matches(body.senha(), user.getSenha())) {
             String token= this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new LoginResponseDTO(user.getNome_usuario(), token));
+            return ResponseEntity.ok(new LoginResponseDTO(user.getLogin(), token));
         } return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/registro") //endpoint para registro de novos usuários
     public ResponseEntity registro(@RequestBody CadastroRequestDTO body) {
-        Optional<User> user = this.userRepository.findByEmail(body.email());
+        Optional<User> user = this.userRepository.findByLogin(body.login());
 
         if (user.isEmpty()) {
             User newUser = new User();
             newUser.setSenha(passwordEncoder.encode(body.senha()));
-            newUser.setNome_usuario(body.nome_usuario());
+            newUser.setLogin(body.login());
             newUser.setNome_completo(body.nome_completo());
             newUser.setEmail(body.email());
             newUser.setCpf(body.cpf());
@@ -49,7 +49,7 @@ public class AuthController {
             this.userRepository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new LoginResponseDTO(newUser.getNome_usuario(), token));
+            return ResponseEntity.ok(new LoginResponseDTO(newUser.getLogin(), token));
         }
         return ResponseEntity.badRequest().build();
 
