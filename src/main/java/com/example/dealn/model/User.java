@@ -56,6 +56,8 @@ public class User implements UserDetails {
     @Digits(integer = 15, fraction = 0, message = "O telefone deve conter apenas números, com no máximo 15 dígitos")
     private Integer telefone;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole role;
 
     public User(String login, String senha, UserRole role) {
