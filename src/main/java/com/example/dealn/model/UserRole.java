@@ -2,7 +2,8 @@ package com.example.dealn.model;
 
 public enum UserRole {
     ADMIN("admin"),
-        USER("user");
+        USER("user"),
+        EMPRESA("empresa");
 
     private String role;
 

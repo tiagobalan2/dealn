@@ -45,6 +45,7 @@ public class AuthController {
             newUser.setNome_completo(body.nome_completo());
             newUser.setEmail(body.email());
             newUser.setCpf(body.cpf());
+            newUser.setCnpj(body.cnpj());
             newUser.setTelefone(body.telefone());
             newUser.setRole(body.role());
             this.userRepository.save(newUser);

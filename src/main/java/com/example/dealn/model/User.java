@@ -43,9 +43,13 @@ public class User implements UserDetails {
     @Size(max = 50, message = "O email deve ter no máximo 50 caracteres")
     private String email;
 
-    @Column(name = "cpf", nullable = false, unique = true, length = 11)
+    @Column(name = "cpf", nullable = true, unique = true, length = 11)
     @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos")
     private String cpf;
+
+    @Column(name = "cnpj", nullable = true, unique = true, length = 14)
+    @Pattern(regexp = "\\d{14}", message = "O CNPJ deve conter exatamente 14 dígitos")
+    private String cnpj;
 
     @Column(name = "senha", nullable = false)
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
@@ -69,7 +73,8 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_EMPRESA"));
+        if (this.role == UserRole.EMPRESA) return List.of(new SimpleGrantedAuthority("ROLE_EMPRESA"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         // admin tem acesso total, user tem acesso a visualizacao mas tem que estar autenticado para isso
 
